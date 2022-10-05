@@ -1,0 +1,89 @@
+view: sales {
+  derived_table: {
+    sql:select "1" as transaction_id,  date("2020-06-06") as date,  "6" as product_id,  "65" as salesperson_id,  "17" as customer_id,  "6" as office_id,  5 as hours,  200 as sales,  "Florida" as transaction_state, union all
+        select "2" as transaction_id,  date("2021-07-30") as date,  "2" as product_id,  "30" as salesperson_id,  "8" as customer_id,  "4" as office_id,  62 as hours,  980 as sales,  "Iowa" as transaction_state, union all
+        select "3" as transaction_id,  date("2021-01-05") as date,  "5" as product_id,  "15" as salesperson_id,  "5" as customer_id,  "3" as office_id,  3 as hours,  400 as sales,  "New York" as transaction_state, union all
+        select "4" as transaction_id,  date("2020-08-19") as date,  "8" as product_id,  "2" as salesperson_id,  "19" as customer_id,  "2" as office_id,  5 as hours,  60 as sales,  "Utah" as transaction_state, union all
+        select "5" as transaction_id,  date("2020-02-27") as date,  "8" as product_id,  "48" as salesperson_id,  "18" as customer_id,  "10" as office_id,  3 as hours,  90 as sales,  "Alabama" as transaction_state, union all
+        select "6" as transaction_id,  date("2021-06-24") as date,  "3" as product_id,  "20" as salesperson_id,  "1" as customer_id,  "3" as office_id,  19 as hours,  135 as sales,  "Missouri" as transaction_state, union all
+        select "7" as transaction_id,  date("2021-06-24") as date,  "5" as product_id,  "13" as salesperson_id,  "3" as customer_id,  "3" as office_id,  53 as hours,  88 as sales,  "New York" as transaction_state, union all
+        select "8" as transaction_id,  date("2020-01-21") as date,  "5" as product_id,  "63" as salesperson_id,  "16" as customer_id,  "1" as office_id,  15 as hours,  120 as sales,  "California" as transaction_state, union all
+        select "9" as transaction_id,  date("2021-09-18") as date,  "11" as product_id,  "30" as salesperson_id,  "17" as customer_id,  "1" as office_id,  52 as hours,  540 as sales,  "New York" as transaction_state, union all
+		select "10" as transaction_id,  date("2021-07-18") as date,  "11" as product_id,  "33" as salesperson_id,  "14" as customer_id,  "1" as office_id,  52 as hours,  320 as sales,  "Boston" as transaction_state, union all
+		select "11" as transaction_id,  date("2021-02-18") as date,  "11" as product_id,  "83" as salesperson_id,  "14" as customer_id,  "1" as office_id,  52 as hours,  120 as sales,  "Atlanta" as transaction_state, union all
+        select "12" as transaction_id,  date("2020-10-16") as date,  "11" as product_id,  "99" as salesperson_id,  "1" as customer_id,  "9" as office_id,  95 as hours,  700 as sales,  "California" as transaction_state;;
+    
+    }
+    
+    
+    dimension: transaction_id {
+      type: string
+      sql: ${TABLE}.transaction_id ;;
+      
+    }
+    
+    dimension: transaction_date {
+      type: date
+      sql: ${TABLE}.date ;;
+      
+    }
+    
+    dimension: is_expensive {
+      type: yesno
+      sql: ${TABLE}.sales > 300 ;;
+      
+    }
+    
+    dimension:  state{
+      type: string
+      sql: ${TABLE}.transaction_state ;;
+    }
+    
+    dimension:  sales{
+      type: number
+      sql: ${TABLE}.sales ;;
+    }
+    
+    dimension:  hours{
+      type: number
+      sql: ${TABLE}.hours ;;
+    }
+    
+    dimension: sales_with_tax {
+      type: number
+      sql: ${TABLE}.hours * 0.15 ;;
+    }
+    
+    dimension: group_stat {
+      type: string
+      case: {
+        when: {
+          sql: ${TABLE}.transaction_state in ("California", "New York") ;;
+          label: "Category One"
+        }
+        when: {
+          sql:  ${TABLE}.transaction_state in ("Florida", "Iowa");;
+          label: "Category Two"
+        }
+        else: "Category Three"
+      }
+      
+    }
+    
+    measure: count {
+      type: count
+    }
+    
+    measure: total_sale {
+      type: sum
+      sql: ${TABLE}.sales ;;
+    }
+    
+    measure: average_sale {
+      type: average
+      sql: ${TABLE}.sales ;;
+    }
+    
+  }
+  
+  explore: sales{}
