@@ -14,5 +14,8 @@ Looker data model and advanced concepts
 ## Total Sale and Average Sale Count 
 
 
+![p94](https://user-images.githubusercontent.com/24944494/194136707-a0baf167-f089-4eff-83e4-9af71647f263.png)
+
+
 
 
