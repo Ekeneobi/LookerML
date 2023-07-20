@@ -1,0 +1,12 @@
+case
+when regexp_contains(Source,R"(?i)(agweb)|(?i)(caar_network)|(?i)(certifiedcropadvisor)|(?i)(coegi)|(?i)(crop_life)|(?i)(crops_and_soils)|(?i)(cropsandsoils)|(?i)(farm_journal)|(?i)(farm_marketer)|(?i)(precision_reach)|(?i)(real_agriculture)|(?i)(top_crop_manager)|(?i)(successful_farming)|(?i)(theweathernetwork)|(?i)(dtnpf)") and regexp_contains(Medium,"display")  then  "Vendor Media"
+when regexp_contains(Source,R"(?i)(dynadmic)|(?i)(simplifi)|(?i)(loknow)") then "Programmatic Media"
+when regexp_contains(Source,R"(?i)(western)|(?i)(seeking)|(?i)(alpha)") then "Earned Media"
+when regexp_contains(Source,R"(?i)(nutrieneconomics)|(?i)(nutrien\-economics)|(?i)(app8\.workamajig\.com)|(?i)(tagassistant\.google\.com)") then "Internal"
+when regexp_contains(Source,R"(?i)(twitter)|(?i)(linkedin)|(?i)(facebook)|(?i)(youtube)|(?i)(instagram)|(?i)(reddit)|(?i)(snapchat)|(?i)(t\.co)") then "Social Media"
+when regexp_contains(Source,"google") and regexp_contains(Medium,"cpc") then "Paid Google"
+when regexp_contains(Medium,"(?i)(organic)")  then "Organic Search"
+when regexp_contains(Source,"direct") and regexp_contains(Medium,"none") then "Direct"
+when regexp_contains(Medium, R"(?i)^(email)|(?i)^(email)$|(i?)(email)|(?i)(newsletter)") then "Email"
+else "Other"
+end

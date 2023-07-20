@@ -1,0 +1,5 @@
+case
+when regexp_contains(Page Title, R"(?i)(Defining And Understanding Enhanced Efficiency Fertilizers)|(?i)(Fall\-Applied Nitrogen For Corn Success)|(?i)(Five Tools For The Price Of One\: The Case For Farm Water Testing)|(?i)(Growing Degree Days Calculator\: Benefits \& Use)|(?i)(How Much Phosphorus And Potassium Are You Really Losing\?)|(?i)(How should a farmer sample for diagnostic purposes\?)") then Page Title
+when Regexp_contains(Page Title,R"(?i)(Outsmart Your)|(?i)( Going On Inside Your Plants\?)|(?i)(How should a farmer sample for diagnostic purposes\?)|(?i)(New Study Identifies Corn Sulfur Needs\.)|(?i)(Potatoes And The Role Of Enhanced Efficiency Nitrogen Fertilizers)|(?i)(The Importance Of The 4Rs\: Asking The Next Question)|(?i)(The Importance of Potassium Fertilizer)|(?i)(The Right Place\: Fertilizer Application Options In Western)|(?i)(Winter Wheat Season Is Here – Are You Ready\?)") then Page Title
+else "Other"
+end
